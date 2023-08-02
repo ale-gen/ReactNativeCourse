@@ -4,7 +4,7 @@ Welcome to my React Native Projects Repository! This repository contains various
 
 ## Projects
 
-The repository currently contains the following projects (each on separate branch):
+The repository currently contains the following projects (each on separate directory):
 
 - Guess Number Game - simple game in which you enter number, and the bot guesses it
 
