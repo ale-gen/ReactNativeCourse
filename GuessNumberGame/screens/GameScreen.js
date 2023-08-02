@@ -5,6 +5,7 @@ import {
   Alert,
   ScrollView,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -114,15 +115,17 @@ function GameScreen({ userNumber, onGameOver }) {
 
 export default GameScreen;
 
+const deviceHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 20,
-    marginTop: 100,
+    marginTop: deviceHeight > 700 ? 100 : 50,
     marginHorizontal: 20,
   },
   numberContainer: {
-    flex: 10,
+    flex: deviceHeight > 700 ? 10 : 7,
     justifyContent: "center",
     alignItems: "center",
   },

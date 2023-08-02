@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Alert,
   KeyboardAvoidingView,
+  Dimensions,
 } from "react-native";
 import { useState } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -67,12 +68,14 @@ function StartGameScreen({ onPickNumber }) {
 
 export default StartGameScreen;
 
+const deviceHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     backgroundColor: Colors.primaryBackground,
     padding: 15,
-    marginTop: 100,
+    marginTop: deviceHeight > 700 ? 100 : 50,
     marginHorizontal: 20,
     borderRadius: 20,
   },

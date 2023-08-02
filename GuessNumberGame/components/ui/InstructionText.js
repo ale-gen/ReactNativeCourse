@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 function InstructionText({ children }) {
   return (
@@ -10,6 +10,8 @@ function InstructionText({ children }) {
 
 export default InstructionText;
 
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   textContainer: {
     alignItems: "center",
@@ -18,7 +20,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 15,
+    fontSize: deviceWidth < 380 ? 13 : 15,
     fontWeight: "300",
+    textAlign: "center",
   },
 });
