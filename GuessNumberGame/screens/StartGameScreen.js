@@ -34,7 +34,10 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={[styles.inputContainer]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.rootContainer}
+    >
       <Title>Enter a number</Title>
       <View style={styles.textInputContainer}>
         <TextInput
@@ -71,13 +74,10 @@ export default StartGameScreen;
 const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  rootContainer: {
     flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    padding: 15,
     marginTop: deviceHeight > 700 ? 100 : 50,
     marginHorizontal: 20,
-    borderRadius: 20,
   },
   textInputContainer: {
     flex: 10,
