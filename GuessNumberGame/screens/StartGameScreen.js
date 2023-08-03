@@ -5,6 +5,8 @@ import {
   Alert,
   KeyboardAvoidingView,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useState } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -35,22 +37,24 @@ function StartGameScreen({ onPickNumber }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.select({ ios: "padding", android: "height" })}
       style={styles.rootContainer}
     >
       <Title>Enter a number</Title>
-      <View style={styles.textInputContainer}>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2}
-          inputMode="numeric"
-          keyboardType="number-pad"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={enteredNumber}
-          onChangeText={numberInputHandler}
-        />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            style={styles.numberInput}
+            maxLength={2}
+            inputMode="numeric"
+            keyboardType="number-pad"
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={enteredNumber}
+            onChangeText={numberInputHandler}
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           <PrimaryButton
