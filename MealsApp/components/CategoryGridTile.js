@@ -6,6 +6,7 @@ import {
   Text,
   useWindowDimensions,
   ImageBackground,
+  Platform,
 } from "react-native";
 
 function CategoryGridTile({ title, imagePath, onPress }) {
@@ -25,6 +26,7 @@ function CategoryGridTile({ title, imagePath, onPress }) {
         style={({ pressed }) => [
           styles.buttonContainer,
           styles.border,
+          styles.shadow,
           pressed ? styles.pressed : null,
         ]}
         onPress={onPress}
@@ -32,7 +34,7 @@ function CategoryGridTile({ title, imagePath, onPress }) {
         <ImageBackground
           source={imagePath}
           resizeMode="cover"
-          style={[styles.innerContainer, styles.shadow]}
+          style={[styles.innerContainer, styles.innerContainerBorder]}
         >
           <BlurView intensity={30} style={styles.titleContainer}>
             <Text style={styles.title}>{title}</Text>
@@ -51,6 +53,10 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   border: {
+    borderRadius: 20,
+    overflow: Platform.select({ ios: "visible", android: "hidden" }),
+  },
+  innerContainerBorder: {
     borderRadius: 20,
     overflow: "hidden",
   },
