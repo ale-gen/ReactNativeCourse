@@ -1,3 +1,4 @@
+import { BlurView } from "expo-blur";
 import {
   Pressable,
   View,
@@ -23,17 +24,19 @@ function CategoryGridTile({ title, imagePath, onPress }) {
         android_ripple={{ color: "#ccc" }}
         style={({ pressed }) => [
           styles.buttonContainer,
+          styles.border,
           pressed ? styles.pressed : null,
         ]}
         onPress={onPress}
       >
         <ImageBackground
-          source={require("../assets/images/german.jpg")}
+          source={imagePath}
           resizeMode="cover"
-          imageStyle={styles.border}
           style={[styles.innerContainer, styles.shadow]}
         >
-          <Text style={styles.title}>{title}</Text>
+          <BlurView intensity={30} style={styles.titleContainer}>
+            <Text style={styles.title}>{title}</Text>
+          </BlurView>
         </ImageBackground>
       </Pressable>
     </View>
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
   },
   border: {
     borderRadius: 20,
+    overflow: "hidden",
   },
   shadow: {
     shadowColor: "black",
@@ -65,11 +69,18 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    padding: 16,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
+  titleContainer: {
+    width: "100%",
+    height: "30%",
+    justifyContent: "center",
+  },
   title: {
+    fontSize: 20,
+    fontWeight: "500",
     color: "white",
+    textAlign: "center",
   },
 });

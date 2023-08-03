@@ -2,16 +2,16 @@ import Category from "../models/category";
 import Meal from "../models/meal";
 
 export const CATEGORIES = [
-  new Category("c1", "Italian", "../assets/images/italian.jpg"),
-  new Category("c2", "Quick & Easy", "../assets/images/easy.jpg"),
-  new Category("c3", "Hamburgers", "../assets/images/burgers.jpg"),
-  new Category("c4", "German", "../assets/images/german.jpg"),
-  new Category("c5", "Light & Lovely", "../assets/images/light.jpg"),
-  new Category("c6", "Exotic", "../assets/images/exotic.jpg"),
-  new Category("c7", "Breakfast", "../assets/images/breakfest.jpg"),
-  new Category("c8", "Asian", "../assets/images/asian.jpg"),
-  new Category("c9", "French", "../assets/images/french.jpg"),
-  new Category("c10", "Summer", "../assets/images/summer.jpg"),
+  new Category("c1", "Italian", require("../assets/images/italian.jpg")),
+  new Category("c2", "Quick & Easy", require("../assets/images/easy.jpg")),
+  new Category("c3", "Hamburgers", require("../assets/images/burgers.jpg")),
+  new Category("c4", "German", require("../assets/images/german.jpg")),
+  new Category("c5", "Light & Lovely", require("../assets/images/light.jpg")),
+  new Category("c6", "Exotic", require("../assets/images/exotic.jpg")),
+  new Category("c7", "Breakfast", require("../assets/images/breakfest.jpg")),
+  new Category("c8", "Asian", require("../assets/images/asian.jpg")),
+  new Category("c9", "French", require("../assets/images/french.jpg")),
+  new Category("c10", "Summer", require("../assets/images/summer.jpg")),
 ];
 
 export const MEALS = [
