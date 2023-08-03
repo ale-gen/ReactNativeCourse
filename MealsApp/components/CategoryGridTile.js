@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 
-function CategoryGridTile({ title, imagePath }) {
+function CategoryGridTile({ title, imagePath, onPress }) {
   const { width, height } = useWindowDimensions();
   const gridTileWidth = width / 4;
   const gridTileHeight = 2 * gridTileWidth;
@@ -25,6 +25,7 @@ function CategoryGridTile({ title, imagePath }) {
           styles.buttonContainer,
           pressed ? styles.pressed : null,
         ]}
+        onPress={onPress}
       >
         <ImageBackground
           source={require("../assets/images/german.jpg")}

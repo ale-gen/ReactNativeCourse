@@ -1,14 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
-import { BlurView } from "expo-blur";
+import MealsScreen from "./screens/MealsScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <BlurView intensity={40} tint="default">
+    <>
       <StatusBar style="light" />
-      <CategoriesScreen />
-    </BlurView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
+          <Stack.Screen name="Meals" component={MealsScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
