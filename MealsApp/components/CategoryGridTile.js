@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Platform,
 } from "react-native";
+import ImageCard from "./ui/ImageCard";
 
 function CategoryGridTile({ title, imagePath, onPress }) {
   const { width, height } = useWindowDimensions();
@@ -31,15 +32,14 @@ function CategoryGridTile({ title, imagePath, onPress }) {
         ]}
         onPress={onPress}
       >
-        <ImageBackground
-          source={imagePath}
-          resizeMode="cover"
-          style={[styles.innerContainer, styles.innerContainerBorder]}
-        >
-          <BlurView intensity={30} style={styles.titleContainer}>
-            <Text style={styles.title}>{title}</Text>
-          </BlurView>
-        </ImageBackground>
+        <ImageCard
+          imagePath={imagePath}
+          bottomView={
+            <BlurView intensity={30} style={styles.titleContainer}>
+              <Text style={styles.title}>{title.toUpperCase()}</Text>
+            </BlurView>
+          }
+        />
       </Pressable>
     </View>
   );
@@ -50,15 +50,11 @@ export default CategoryGridTile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 16,
+    margin: 10,
   },
   border: {
     borderRadius: 20,
     overflow: Platform.select({ ios: "visible", android: "hidden" }),
-  },
-  innerContainerBorder: {
-    borderRadius: 20,
-    overflow: "hidden",
   },
   shadow: {
     shadowColor: "black",
@@ -73,18 +69,13 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.5,
   },
-  innerContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
   titleContainer: {
     width: "100%",
     height: "30%",
     justifyContent: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "500",
     color: "white",
     textAlign: "center",
