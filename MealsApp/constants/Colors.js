@@ -1,5 +1,6 @@
 const Colors = {
-  lightBlack: "#1A1110",
+  headerColor: "#2d2d30",
+  lightBlack: "#454549",
 };
 
 export default Colors;

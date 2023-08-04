@@ -1,9 +1,12 @@
-import { FlatList, StyleSheet } from "react-native";
-import { BlurView } from "expo-blur";
+import { FlatList, View } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
 
 function CategoriesScreen({ navigation }) {
+  const spacer = () => {
+    return <View style={{ height: 40 }}></View>;
+  };
+
   function renderCategoryItem(itemData) {
     function pressHandler() {
       navigation.navigate("Meals", {
@@ -21,17 +24,14 @@ function CategoriesScreen({ navigation }) {
   }
 
   return (
-    <BlurView intensity={40} tint="default" style={{ flex: 1 }}>
-      <FlatList
-        data={CATEGORIES}
-        renderItem={renderCategoryItem}
-        numColumns={2}
-        keyExtractor={(item) => item.id}
-      />
-    </BlurView>
+    <FlatList
+      data={CATEGORIES}
+      renderItem={renderCategoryItem}
+      numColumns={2}
+      keyExtractor={(item) => item.id}
+      ListFooterComponent={spacer}
+    />
   );
 }
 
 export default CategoriesScreen;
-
-const styles = StyleSheet.create({});
