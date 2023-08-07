@@ -1,8 +1,10 @@
 import { FlatList, View, StyleSheet } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/cells/CategoryGridTile";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 function CategoriesScreen({ navigation }) {
+  const tabBarHeight = useBottomTabBarHeight();
   const spacer = (height) => {
     return <View style={{ height: height }}></View>;
   };
@@ -31,7 +33,7 @@ function CategoriesScreen({ navigation }) {
       numColumns={2}
       keyExtractor={(item) => item.id}
       ListHeaderComponent={spacer(20)}
-      ListFooterComponent={spacer(40)}
+      ListFooterComponent={spacer(tabBarHeight)}
     />
   );
 }
