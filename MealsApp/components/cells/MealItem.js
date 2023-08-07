@@ -6,12 +6,14 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import ImageCard from "./ui/ImageCard";
+import ImageCard from "../ui/ImageCard";
 import { BlurView } from "expo-blur";
-import MealComplexityView from "./ui/MealComplexityView";
-import DurationView from "./ui/DurationView";
+import MealComplexityView from "../ui/MealComplexityView";
+import DurationView from "../ui/DurationView";
+import { useNavigation } from "@react-navigation/native";
 
-function MealItem({ title, imageUrl, duration, complexity, affordability }) {
+function MealItem({ id, title, imageUrl, duration, complexity }) {
+  const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
 
   function renderAdditionalInfo() {
@@ -27,22 +29,27 @@ function MealItem({ title, imageUrl, duration, complexity, affordability }) {
     return <DurationView duration={duration} />;
   }
 
+  function pressHandler() {
+    navigation.navigate("MealDetails", {
+      mealId: id,
+      mealTitle: title,
+    });
+  }
+
   return (
-    <View>
+    <View style={styles.container}>
       <Pressable
         android_ripple={{ color: "#ccc" }}
         style={({ pressed }) => (pressed ? styles.pressed : null)}
-        // onPress={navigation}
+        onPress={pressHandler}
       >
         <View>
-          <>
-            <ImageCard
-              imagePath={{ uri: imageUrl }}
-              bottomView={renderAdditionalInfo()}
-              rightTopCornerView={renderDuration()}
-              containerStyle={{ width: width * 0.7, height: height / 2.5 }}
-            />
-          </>
+          <ImageCard
+            imagePath={{ uri: imageUrl }}
+            bottomView={renderAdditionalInfo()}
+            rightTopCornerView={renderDuration()}
+            containerStyle={{ width: width * 0.7, height: height / 2.5 }}
+          />
         </View>
       </Pressable>
     </View>
@@ -52,9 +59,8 @@ function MealItem({ title, imageUrl, duration, complexity, affordability }) {
 export default MealItem;
 
 const styles = StyleSheet.create({
-  image: {
-    height: "70%",
-    width: "70%",
+  container: {
+    margin: 5,
   },
   additionalInfoContainer: {
     width: "100%",

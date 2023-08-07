@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
-function MealComplexityView({ complexity }) {
+function MealComplexityView({ complexity, iconColor }) {
   const filledIconsNumber =
     complexity === "simple" ? 1 : complexity === "hard" ? 3 : 2;
   const outlineIconsNumber = 3 - filledIconsNumber;
@@ -13,7 +13,7 @@ function MealComplexityView({ complexity }) {
       <MaterialCommunityIcons
         name="pot-steam"
         size={28}
-        color="white"
+        color={iconColor ?? "white"}
         key={i}
       />
     );
@@ -23,7 +23,7 @@ function MealComplexityView({ complexity }) {
       <MaterialCommunityIcons
         name="pot-steam-outline"
         size={28}
-        color="white"
+        color={iconColor ?? "white"}
         key={i + filledIconsNumber}
       />
     );

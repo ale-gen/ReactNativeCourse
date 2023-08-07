@@ -23,7 +23,6 @@ export default ImageCard;
 const styles = StyleSheet.create({
   defaultContainer: {
     flex: 1,
-    margin: 5,
   },
   border: {
     borderRadius: 20,

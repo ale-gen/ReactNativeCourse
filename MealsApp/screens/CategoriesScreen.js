@@ -1,16 +1,17 @@
-import { FlatList, View } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
-import CategoryGridTile from "../components/CategoryGridTile";
+import CategoryGridTile from "../components/cells/CategoryGridTile";
 
 function CategoriesScreen({ navigation }) {
-  const spacer = () => {
-    return <View style={{ height: 40 }}></View>;
+  const spacer = (height) => {
+    return <View style={{ height: height }}></View>;
   };
 
   function renderCategoryItem(itemData) {
     function pressHandler() {
       navigation.navigate("Meals", {
         categoryId: itemData.item.id,
+        categoryTitle: itemData.item.title,
       });
     }
 
@@ -29,9 +30,16 @@ function CategoriesScreen({ navigation }) {
       renderItem={renderCategoryItem}
       numColumns={2}
       keyExtractor={(item) => item.id}
-      ListFooterComponent={spacer}
+      ListHeaderComponent={spacer(20)}
+      ListFooterComponent={spacer(40)}
     />
   );
 }
 
 export default CategoriesScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 4,
+  },
+});

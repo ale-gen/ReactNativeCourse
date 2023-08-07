@@ -8,7 +8,7 @@ import {
   ImageBackground,
   Platform,
 } from "react-native";
-import ImageCard from "./ui/ImageCard";
+import ImageCard from "../ui/ImageCard";
 
 function CategoryGridTile({ title, imagePath, onPress }) {
   const { width, height } = useWindowDimensions();

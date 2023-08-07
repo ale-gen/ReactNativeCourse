@@ -1,8 +1,8 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import { MEALS } from "../data/dummy-data";
-import MealItem from "../components/MealItem";
+import MealItem from "../components/cells/MealItem";
 
-function MealsScreen({ route }) {
+function MealsScreen({ route, navigation }) {
   const categoryId = route.params.categoryId;
   const displayedMeals = MEALS.filter((mealItem) => {
     return mealItem.categoryIds.indexOf(categoryId) >= 0;
@@ -11,6 +11,7 @@ function MealsScreen({ route }) {
   function renderMeal(itemData) {
     const item = itemData.item;
     const mealItemProps = {
+      id: item.id,
       title: item.title,
       imageUrl: item.imageUrl,
       complexity: item.complexity,
