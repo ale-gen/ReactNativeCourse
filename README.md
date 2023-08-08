@@ -8,6 +8,22 @@ The repository currently contains the following projects (each on separate direc
 
 - Guess Number Game - simple game in which you enter number, and the bot guesses it
 
+```
+Goals:
+* Be familiar with JS
+* Creating own components with custom styles
+* Passing data between components
+```
+
+- Meals App - app with dummy recipes
+
+```
+Goals:
+* Learn React Navigation (using nested Navigators)
+* Continue creating own components with custom styles
+* Learn React's Context API & Redux
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
