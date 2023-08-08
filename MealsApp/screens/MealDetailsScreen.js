@@ -1,25 +1,25 @@
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  Dimensions,
-  Button,
-} from "react-native";
+import { StyleSheet, View, ScrollView, Text, Dimensions } from "react-native";
 import { MEALS } from "../data/dummy-data";
 import ImageCard from "../components/ui/ImageCard";
 import MealComplexityView from "../components/ui/MealComplexityView";
 import { BlurView } from "expo-blur";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import IconLabel from "../components/ui/IconLabel";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useContext } from "react";
 import IconButton from "../components/ui/IconButton";
+import { FavouritesContext } from "../store/context/favourites-context";
 
 function MealDetailsScreen({ route, navigation }) {
+  const favMealsContext = useContext(FavouritesContext);
   const meal = MEALS.find((meal) => meal.id === route.params.mealId);
+  const isFavourite = favMealsContext.ids.includes(route.params.mealId);
 
-  function headerButtonPressedHandler() {
-    console.log("Pressed on meal: " + meal.title);
+  function changeFavouriteStatusHandler() {
+    if (isFavourite) {
+      favMealsContext.removeFavourite(meal.id);
+    } else {
+      favMealsContext.addFavourite(meal.id);
+    }
   }
 
   useLayoutEffect(() => {
@@ -27,13 +27,13 @@ function MealDetailsScreen({ route, navigation }) {
       headerRight: () => {
         return (
           <IconButton
-            iconName="bookmark-outline"
-            onPress={headerButtonPressedHandler}
+            iconName={isFavourite ? "bookmark" : "bookmark-outline"}
+            onPress={changeFavouriteStatusHandler}
           />
         );
       },
     });
-  }, []);
+  }, [navigation, changeFavouriteStatusHandler]);
 
   function renderTitle() {
     return <Text style={styles.title}>{meal.title.toUpperCase()}</Text>;

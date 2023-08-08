@@ -9,6 +9,7 @@ import Colors from "./constants/Colors";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
 import FavouritesScreen from "./screens/FavouritesScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import FavouritesContextProvider from "./store/context/favourites-context";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,47 +77,49 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: Colors.headerColor,
-              elevation: 1,
-              shadowOpacity: 0.9,
-              shadowRadius: 10,
-              shadowColor: "black",
-            },
-            headerTintColor: "white",
-            cardStyle: { backgroundColor: Colors.lightBlack },
-          }}
-        >
-          <Stack.Screen
-            name="Tab"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Meals"
-            component={MealsScreen}
-            options={({ route }) => {
-              const categoryTitle = route.params.categoryTitle;
-              return {
-                title: categoryTitle,
-              };
+      <FavouritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+                elevation: 1,
+                shadowOpacity: 0.9,
+                shadowRadius: 10,
+                shadowColor: "black",
+              },
+              headerTintColor: "white",
+              cardStyle: { backgroundColor: Colors.lightBlack },
             }}
-          />
-          <Stack.Screen
-            name="MealDetails"
-            component={MealDetailsScreen}
-            options={({ route }) => {
-              const mealTitle = route.params.mealTitle;
-              return {
-                title: mealTitle,
-              };
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen
+              name="Tab"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Meals"
+              component={MealsScreen}
+              options={({ route }) => {
+                const categoryTitle = route.params.categoryTitle;
+                return {
+                  title: categoryTitle,
+                };
+              }}
+            />
+            <Stack.Screen
+              name="MealDetails"
+              component={MealDetailsScreen}
+              options={({ route }) => {
+                const mealTitle = route.params.mealTitle;
+                return {
+                  title: mealTitle,
+                };
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavouritesContextProvider>
     </>
   );
 }
