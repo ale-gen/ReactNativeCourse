@@ -1,15 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
-import CategoriesScreen from "./screens/CategoriesScreen";
-import MealsScreen from "./screens/MealsScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Provider } from "react-redux";
+import { store } from "./store/redux/store";
 import Colors from "./constants/Colors";
+import CategoriesScreen from "./screens/CategoriesScreen";
+import MealsScreen from "./screens/MealsScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
 import FavouritesScreen from "./screens/FavouritesScreen";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import FavouritesContextProvider from "./store/context/favourites-context";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,16 +20,9 @@ function TabNavigator() {
       initialRouteName="Categories"
       sceneContainerStyle={{ backgroundColor: Colors.lightBlack }}
       screenOptions={{
-        headerStyle: {
-          backgroundColor: Colors.headerColor,
-          elevation: 1,
-          shadowOpacity: 0.9,
-          shadowRadius: 10,
-          shadowColor: "black",
-        },
+        headerStyle: styles.headerStyle,
         headerTintColor: "white",
         tabBarStyle: {
-          backgroundColor: "clear",
           backgroundColor: Colors.headerColor,
           opacity: 0.95,
           borderTopWidth: 0,
@@ -77,17 +71,11 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavouritesContextProvider>
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
-              headerStyle: {
-                backgroundColor: Colors.headerColor,
-                elevation: 1,
-                shadowOpacity: 0.9,
-                shadowRadius: 10,
-                shadowColor: "black",
-              },
+              headerStyle: styles.headerStyle,
               headerTintColor: "white",
               cardStyle: { backgroundColor: Colors.lightBlack },
             }}
@@ -114,12 +102,13 @@ export default function App() {
                 const mealTitle = route.params.mealTitle;
                 return {
                   title: mealTitle,
+                  presentation: "modal",
                 };
               }}
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavouritesContextProvider>
+      </Provider>
     </>
   );
 }
@@ -130,5 +119,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  headerStyle: {
+    backgroundColor: Colors.headerColor,
+    elevation: 1,
+    shadowOpacity: 0.9,
+    shadowRadius: 10,
+    shadowColor: "black",
   },
 });

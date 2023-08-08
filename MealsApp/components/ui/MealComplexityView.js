@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Colors from "../../constants/Colors";
 
 function MealComplexityView({ complexity, iconColor }) {
   const filledIconsNumber =

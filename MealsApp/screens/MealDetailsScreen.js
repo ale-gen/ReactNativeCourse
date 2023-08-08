@@ -1,24 +1,34 @@
 import { StyleSheet, View, ScrollView, Text, Dimensions } from "react-native";
 import { MEALS } from "../data/dummy-data";
-import ImageCard from "../components/ui/ImageCard";
-import MealComplexityView from "../components/ui/MealComplexityView";
 import { BlurView } from "expo-blur";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import IconLabel from "../components/ui/IconLabel";
-import { useLayoutEffect, useContext } from "react";
+import { useLayoutEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addFavourite, removeFavourite } from "../store/redux/favourites";
+import ImageCard from "../components/ui/ImageCard";
+import MealComplexityView from "../components/ui/MealComplexityView";
 import IconButton from "../components/ui/IconButton";
-import { FavouritesContext } from "../store/context/favourites-context";
+import IconLabel from "../components/ui/IconLabel";
 
 function MealDetailsScreen({ route, navigation }) {
-  const favMealsContext = useContext(FavouritesContext);
+  const favMealIds = useSelector((state) => state.favouriteMeals.ids);
+  const dispatch = useDispatch();
   const meal = MEALS.find((meal) => meal.id === route.params.mealId);
-  const isFavourite = favMealsContext.ids.includes(route.params.mealId);
+  const isFavourite = favMealIds.includes(route.params.mealId);
 
   function changeFavouriteStatusHandler() {
     if (isFavourite) {
-      favMealsContext.removeFavourite(meal.id);
+      dispatch(
+        removeFavourite({
+          id: meal.id,
+        })
+      );
     } else {
-      favMealsContext.addFavourite(meal.id);
+      dispatch(
+        addFavourite({
+          id: meal.id,
+        })
+      );
     }
   }
 

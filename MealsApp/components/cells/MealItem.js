@@ -2,15 +2,14 @@ import {
   View,
   Text,
   Pressable,
-  Image,
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import ImageCard from "../ui/ImageCard";
 import { BlurView } from "expo-blur";
+import { useNavigation } from "@react-navigation/native";
+import ImageCard from "../ui/ImageCard";
 import MealComplexityView from "../ui/MealComplexityView";
 import DurationView from "../ui/DurationView";
-import { useNavigation } from "@react-navigation/native";
 
 function MealItem({ id, title, imageUrl, duration, complexity }) {
   const navigation = useNavigation();
@@ -48,7 +47,7 @@ function MealItem({ id, title, imageUrl, duration, complexity }) {
             imagePath={{ uri: imageUrl }}
             bottomView={renderAdditionalInfo()}
             rightTopCornerView={renderDuration()}
-            containerStyle={{ width: width * 0.7, height: height / 2.5 }}
+            containerStyle={{ width: width * 0.85, height: height * 0.5 }}
           />
         </View>
       </Pressable>
@@ -60,7 +59,8 @@ export default MealItem;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
+    flex: 1,
+    margin: 10,
   },
   additionalInfoContainer: {
     width: "100%",

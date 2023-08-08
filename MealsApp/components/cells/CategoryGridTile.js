@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   useWindowDimensions,
-  ImageBackground,
   Platform,
 } from "react-native";
 import ImageCard from "../ui/ImageCard";
