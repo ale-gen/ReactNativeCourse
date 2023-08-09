@@ -65,7 +65,7 @@ function TabBar() {
 export default function App() {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator

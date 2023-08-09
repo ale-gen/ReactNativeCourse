@@ -1,5 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
+import { ExpensesMock } from "../mocks/ExpensesMock";
+import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
+import ExpensesList from "../components/ExpensesOutput/ExpensesList";
 
 function RecentExpenses() {
   const insets = useSafeAreaInsets();
@@ -16,7 +20,11 @@ function RecentExpenses() {
         },
       ]}
     >
-      <Text>Recent expenses</Text>
+      <ExpensesSummary
+        expenses={ExpensesMock}
+        period={ExpenseSummaryPeriod.Week}
+      />
+      <ExpensesList expenses={ExpensesMock} />
     </View>
   );
 }

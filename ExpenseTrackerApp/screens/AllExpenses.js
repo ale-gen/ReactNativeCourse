@@ -1,6 +1,10 @@
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ExpenseItem from "../components/ExpenseItem";
+import ExpenseItem from "../components/ExpensesOutput/ExpenseItem";
+import ExpenseOutput from "../components/ExpensesOutput/ExpensesOutput";
+import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
+import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
+import { ExpensesMock } from "../mocks/ExpensesMock";
 
 function AllExpenses() {
   const insets = useSafeAreaInsets();
@@ -16,8 +20,10 @@ function AllExpenses() {
         },
       ]}
     >
-      <Text>All expenses</Text>
-      <ExpenseItem name={"Shopping"} />
+      <ExpensesSummary
+        expenses={ExpensesMock}
+        period={ExpenseSummaryPeriod.AllTime}
+      />
     </View>
   );
 }
