@@ -4,10 +4,15 @@ import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
 import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
 import ExpensesList from "../components/ExpensesOutput/ExpensesList";
 import { useSelector } from "react-redux";
+import { getDateMinusDays } from "../util/date";
 
 function RecentExpenses() {
   const insets = useSafeAreaInsets();
-  const expenses = useSelector((state) => state.expensesStore.expenses);
+  const expenses = useSelector((state) =>
+    state.expensesStore.expenses.filter(
+      (expense) => expense.date >= getDateMinusDays(new Date(), 7)
+    )
+  );
 
   return (
     <View
