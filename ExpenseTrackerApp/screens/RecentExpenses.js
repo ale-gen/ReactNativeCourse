@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
-import { ExpensesMock } from "../mocks/ExpensesMock";
 import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
 import ExpensesList from "../components/ExpensesOutput/ExpensesList";
+import { useSelector } from "react-redux";
 
 function RecentExpenses() {
   const insets = useSafeAreaInsets();
+  const expenses = useSelector((state) => state.expensesStore.expenses);
 
   return (
     <View
@@ -19,11 +20,8 @@ function RecentExpenses() {
         },
       ]}
     >
-      <ExpensesSummary
-        expenses={ExpensesMock}
-        period={ExpenseSummaryPeriod.Week}
-      />
-      <ExpensesList expenses={ExpensesMock} />
+      <ExpensesSummary expenses={expenses} period={ExpenseSummaryPeriod.Week} />
+      <ExpensesList expenses={expenses} />
     </View>
   );
 }

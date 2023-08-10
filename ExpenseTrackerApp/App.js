@@ -3,9 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { GlobalStyles } from "./constants/styles";
+import { Provider } from "react-redux";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getHeaderTitle } from "@react-navigation/elements";
+import { store } from "./store/redux/store";
 import AllExpenses from "./screens/AllExpenses";
 import RecentExpenses from "./screens/RecentExpenses";
 import ManageExpense from "./screens/ManageExpense";
@@ -87,39 +89,41 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Tab"
-              component={TabBar}
-              options={{
-                headerShown: false,
-                contentStyle: {
-                  backgroundColor: GlobalStyles.colors.navy,
-                },
-              }}
-            />
-            <Stack.Screen
-              name="ManageExpense"
-              component={ManageExpense}
-              options={({ route }) => {
-                const headerTitle = route.params.title;
-                return {
-                  title: headerTitle,
-                  presentation: "modal",
-                  headerStyle: {
-                    backgroundColor: GlobalStyles.colors.lightBlue,
-                  },
-                  headerLargeTitle: true,
-                  headerLargeTitleShadowVisible: true,
+        <Provider store={store}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Tab"
+                component={TabBar}
+                options={{
+                  headerShown: false,
                   contentStyle: {
-                    backgroundColor: GlobalStyles.colors.lightBlue,
+                    backgroundColor: GlobalStyles.colors.navy,
                   },
-                };
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+                }}
+              />
+              <Stack.Screen
+                name="ManageExpense"
+                component={ManageExpense}
+                options={({ route }) => {
+                  const headerTitle = route.params.title;
+                  return {
+                    title: headerTitle,
+                    presentation: "modal",
+                    headerStyle: {
+                      backgroundColor: GlobalStyles.colors.lightBlue,
+                    },
+                    headerLargeTitle: true,
+                    headerLargeTitleShadowVisible: true,
+                    contentStyle: {
+                      backgroundColor: GlobalStyles.colors.lightBlue,
+                    },
+                  };
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Provider>
       </SafeAreaProvider>
     </>
   );
