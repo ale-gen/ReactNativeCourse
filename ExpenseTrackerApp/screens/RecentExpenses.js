@@ -13,7 +13,6 @@ function RecentExpenses() {
       style={[
         styles.container,
         {
-          paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
@@ -35,5 +34,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "clear",
+    marginTop: 10,
   },
 });

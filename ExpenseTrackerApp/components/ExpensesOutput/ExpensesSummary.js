@@ -8,7 +8,7 @@ function ExpensesSummary({ expenses, period }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{period}</Text>
-      <Text style={styles.text}>${expensesSum.toFixed(2)}</Text>
+      <Text style={styles.text}>{expensesSum.toFixed(2)}zł</Text>
     </View>
   );
 }
@@ -20,11 +20,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
+    marginBottom: 10,
   },
   text: {
     color: "white",
-    fontWeight: "300",
+    fontWeight: "500",
     fontSize: 16,
   },
 });

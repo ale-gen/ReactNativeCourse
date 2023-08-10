@@ -1,10 +1,8 @@
-import { View, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ExpenseItem from "../components/ExpensesOutput/ExpenseItem";
-import ExpenseOutput from "../components/ExpensesOutput/ExpensesOutput";
-import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
 import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
 import { ExpensesMock } from "../mocks/ExpensesMock";
+import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
 
 function AllExpenses() {
   const insets = useSafeAreaInsets();
@@ -12,8 +10,8 @@ function AllExpenses() {
   return (
     <View
       style={[
+        styles.container,
         {
-          paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
@@ -29,3 +27,11 @@ function AllExpenses() {
 }
 
 export default AllExpenses;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "clear",
+    marginTop: 10,
+  },
+});

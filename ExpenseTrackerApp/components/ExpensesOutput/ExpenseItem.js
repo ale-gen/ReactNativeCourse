@@ -2,15 +2,19 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, Pressable, View, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getFormattedDate } from "../../util/date";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Spacer from "../ui/Spacer";
-import { getFormattedDate } from "../../util/date";
 
 function ExpenseItem({ id, name, amount, date }) {
   const navigation = useNavigation();
   function navigateToExpenseManagement() {
     navigation.navigate("ManageExpense", {
-      title: name,
+      title: "Edit expense",
+      expenseId: id,
+      expenseName: name,
+      expenseAmount: amount,
+      expenseDate: date,
     });
   }
   Icon;
@@ -19,7 +23,13 @@ function ExpenseItem({ id, name, amount, date }) {
     <View style={styles.rootContainer}>
       <Pressable
         onPress={navigateToExpenseManagement}
-        style={[styles.container, styles.border, styles.shadow]}
+        android_ripple={{ color: "white" }}
+        style={({ pressed }) => [
+          styles.container,
+          styles.border,
+          styles.shadow,
+          pressed ? styles.pressed : null,
+        ]}
       >
         <MaterialCommunityIcons
           name={name.toLowerCase()}
@@ -82,5 +92,8 @@ const styles = StyleSheet.create({
     color: "gray",
     fontWeight: "200",
     maxWidth: 150,
+  },
+  pressed: {
+    opacity: 0.5,
   },
 });
