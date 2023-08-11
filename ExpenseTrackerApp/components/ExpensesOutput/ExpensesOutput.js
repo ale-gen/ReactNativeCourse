@@ -1,14 +1,34 @@
-import { View } from "react-native";
-import ExpensesList from "./ExpensesList";
+import { View, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ExpensesSummary from "./ExpensesSummary";
+import ExpensesList from "./ExpensesList";
 
-function ExpenseOutput() {
+function ExpensesOutput({ expenses, period }) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View>
-      <ExpensesSummary />
-      <ExpensesList expenses={[{ name: "Shopping" }]} />
+    <View
+      style={[
+        styles.container,
+        {
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}
+    >
+      <ExpensesSummary expenses={expenses} period={period} />
+      <ExpensesList expenses={expenses} />
     </View>
   );
 }
 
-export default ExpenseOutput;
+export default ExpensesOutput;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "clear",
+    marginTop: 10,
+  },
+});
