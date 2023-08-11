@@ -1,9 +1,16 @@
 import { View, Text, StyleSheet } from "react-native";
+import { GlobalStyles } from "../constants/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { addExpense, updateExpense } from "../store/redux/expenses";
+import { useLayoutEffect } from "react";
+import {
+  addExpense,
+  updateExpense,
+  deleteExpense,
+} from "../store/redux/expenses";
 import Button from "../components/ui/Button";
 import Expense from "../models/Expense";
+import IconButton from "../components/ui/IconButton";
 
 function ManageExpense({ route, navigation }) {
   const dispatch = useDispatch();
@@ -14,7 +21,24 @@ function ManageExpense({ route, navigation }) {
   const expenseDate = route.params?.expenseDate;
   const isEditing = !!expenseId;
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          name={"trash-can"}
+          color={GlobalStyles.colors.navy}
+          onPress={deleteExpenseHandler}
+        />
+      ),
+    });
+  }, [navigation, isEditing]);
+
   function cancelHandler() {
+    navigation.goBack();
+  }
+
+  function deleteExpenseHandler() {
+    dispatch(deleteExpense({ id: expenseId }));
     navigation.goBack();
   }
 

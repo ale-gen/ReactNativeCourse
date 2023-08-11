@@ -1,10 +1,10 @@
 import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
-import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
-import ExpensesList from "../components/ExpensesOutput/ExpensesList";
 import { useSelector } from "react-redux";
 import { getDateMinusDays } from "../util/date";
+import { ExpenseSummaryPeriod } from "../models/ExpenseSummaryPeriod";
+import ExpensesList from "../components/ExpensesOutput/ExpensesList";
+import ExpensesSummary from "../components/ExpensesOutput/ExpensesSummary";
 
 function RecentExpenses() {
   const insets = useSafeAreaInsets();
