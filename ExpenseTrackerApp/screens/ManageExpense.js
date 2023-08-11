@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
@@ -27,7 +27,7 @@ function ManageExpense({ route, navigation }) {
         <IconButton
           name={"trash-can"}
           color={GlobalStyles.colors.navy}
-          onPress={deleteExpenseHandler}
+          onPress={showDeletionAlert}
         />
       ),
     });
@@ -35,6 +35,17 @@ function ManageExpense({ route, navigation }) {
 
   function cancelHandler() {
     navigation.goBack();
+  }
+
+  function showDeletionAlert() {
+    Alert.alert("Are you sure?", "The expense will be permanently deleted.", [
+      { text: "Cancel", style: "default" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: deleteExpenseHandler,
+      },
+    ]);
   }
 
   function deleteExpenseHandler() {
