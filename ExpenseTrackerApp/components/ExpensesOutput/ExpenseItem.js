@@ -12,9 +12,6 @@ function ExpenseItem({ id, name, amount, date }) {
     navigation.navigate("ManageExpense", {
       title: "Edit expense",
       expenseId: id,
-      expenseName: name,
-      expenseAmount: amount,
-      expenseDate: date,
     });
   }
   Icon;
