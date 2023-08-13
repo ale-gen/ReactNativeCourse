@@ -1,7 +1,7 @@
 import { View, StyleSheet, TextInput, Text } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 
-function Input({ label, style, textInputConfig }) {
+function Input({ label, style, isValid, textInputConfig }) {
   const inputStyles = [styles.input];
 
   if (textInputConfig && textInputConfig.multiline) {
@@ -11,7 +11,10 @@ function Input({ label, style, textInputConfig }) {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.text}>{label}</Text>
-      <TextInput {...textInputConfig} style={styles.input} />
+      <TextInput
+        {...textInputConfig}
+        style={[styles.input, !isValid ? styles.invalidState : null]}
+      />
     </View>
   );
 }
@@ -39,5 +42,8 @@ const styles = StyleSheet.create({
   multiline: {
     minHeight: 100,
     textAlignVertical: "top",
+  },
+  invalidState: {
+    borderColor: "red",
   },
 });
