@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ExpensesMock } from "../../mocks/ExpensesMock";
 
 const expensesSlice = createSlice({
   name: "expenses",
   initialState: {
-    expenses: ExpensesMock,
+    expenses: [],
   },
   reducers: {
     addExpense: (state, action) => {
-      state.expenses.push(action.payload.expense);
+      state.expenses = [{ ...action.payload }, ...state.expenses];
     },
     deleteExpense: (state, action) => {
       state.expenses.splice(
@@ -18,9 +17,15 @@ const expensesSlice = createSlice({
     },
     updateExpense: (state, action) => {
       const index = state.expenses.findIndex(
-        (expense) => expense.id === action.payload.expense.id
+        (expense) => expense.id === action.payload.id
       );
-      state.expenses[index] = action.payload.expense;
+      console.log(action);
+      const updatableExpense = state.expenses[index];
+      const updatedItem = { ...updatableExpense, ...action.payload.data };
+      state.expenses[index] = updatedItem;
+    },
+    setExpenses: (state, action) => {
+      state.expenses = action.payload;
     },
   },
 });
@@ -28,4 +33,5 @@ const expensesSlice = createSlice({
 export const addExpense = expensesSlice.actions.addExpense;
 export const deleteExpense = expensesSlice.actions.deleteExpense;
 export const updateExpense = expensesSlice.actions.updateExpense;
+export const setExpenses = expensesSlice.actions.setExpenses;
 export default expensesSlice.reducer;

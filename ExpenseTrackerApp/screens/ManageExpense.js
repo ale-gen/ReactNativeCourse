@@ -8,7 +8,11 @@ import {
   updateExpense,
   deleteExpense,
 } from "../store/redux/expenses";
-import Expense from "../models/Expense";
+import {
+  storeExpense,
+  updateExpenseRequest,
+  deleteExpenseRequest,
+} from "../util/http";
 import IconButton from "../components/ui/IconButton";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
@@ -48,22 +52,19 @@ function ManageExpense({ route, navigation }) {
     ]);
   }
 
-  function deleteExpenseHandler() {
+  async function deleteExpenseHandler() {
     dispatch(deleteExpense({ id: expenseId }));
+    await deleteExpenseRequest(expenseId);
     navigation.goBack();
   }
 
-  function saveExpenseHandler(expenseData) {
-    const expense = new Expense(
-      expenseId ?? new Date().toString() + Math.random().toString(),
-      expenseData.name,
-      expenseData.amount,
-      expenseData.date
-    );
+  async function saveExpenseHandler(expenseData) {
     if (isEditing) {
-      dispatch(updateExpense({ expense: expense }));
+      dispatch(updateExpense({ id: expenseId, data: expenseData }));
+      await updateExpenseRequest(expenseId, expenseData);
     } else {
-      dispatch(addExpense({ expense: expense }));
+      dispatch(addExpense({ ...expenseData, id: id }));
+      const id = await storeExpense(expenseData);
     }
     navigation.goBack();
   }

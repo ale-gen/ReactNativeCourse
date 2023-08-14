@@ -2,6 +2,7 @@ import { FlatList } from "react-native";
 import ExpenseItem from "./ExpenseItem";
 
 function ExpensesList({ expenses }) {
+  console.log(expenses);
   function renderExpense(expenseData) {
     const expense = expenseData.item;
     const expenseProps = {
