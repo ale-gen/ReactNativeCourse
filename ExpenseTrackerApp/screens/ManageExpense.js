@@ -2,7 +2,7 @@ import { View, Alert } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import {
   addExpense,
   updateExpense,
@@ -15,6 +15,8 @@ import {
 } from "../util/http";
 import IconButton from "../components/ui/IconButton";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
+import ProgressView from "../components/ui/ProgressView";
+import ErrorToast from "../components/ui/ErrorToast";
 
 function ManageExpense({ route, navigation }) {
   const dispatch = useDispatch();
@@ -24,6 +26,8 @@ function ManageExpense({ route, navigation }) {
     (expense) => expense.id === expenseId
   );
   const isEditing = !!expenseId;
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -53,20 +57,44 @@ function ManageExpense({ route, navigation }) {
   }
 
   async function deleteExpenseHandler() {
-    dispatch(deleteExpense({ id: expenseId }));
-    await deleteExpenseRequest(expenseId);
-    navigation.goBack();
+    setIsLoading(true);
+    try {
+      await deleteExpenseRequest(expenseId);
+      dispatch(deleteExpense({ id: expenseId }));
+      navigation.goBack();
+    } catch (error) {
+      setError("Cannot delete expense.");
+    }
+    setIsLoading(false);
   }
 
   async function saveExpenseHandler(expenseData) {
-    if (isEditing) {
-      dispatch(updateExpense({ id: expenseId, data: expenseData }));
-      await updateExpenseRequest(expenseId, expenseData);
-    } else {
-      dispatch(addExpense({ ...expenseData, id: id }));
-      const id = await storeExpense(expenseData);
+    setIsLoading(true);
+    try {
+      if (isEditing) {
+        dispatch(updateExpense({ id: expenseId, data: expenseData }));
+        await updateExpenseRequest(expenseId, expenseData);
+      } else {
+        dispatch(addExpense({ ...expenseData, id: id }));
+        const id = await storeExpense(expenseData);
+      }
+      navigation.goBack();
+    } catch {
+      setError(`Cannot ${isEditing ? "update" : "create"} expense.`);
     }
-    navigation.goBack();
+    setIsLoading(false);
+  }
+
+  if (error && !isLoading) {
+    return (
+      <ErrorToast
+        message={error}
+        buttonTitle={"Ok"}
+        buttonHandler={() => {
+          setError(null);
+        }}
+      />
+    );
   }
 
   return (
@@ -83,6 +111,7 @@ function ManageExpense({ route, navigation }) {
         onCancel={cancelHandler}
         defaultValues={expense}
       />
+      {isLoading && <ProgressView shouldOverlay={true} />}
     </View>
   );
 }
