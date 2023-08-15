@@ -2,8 +2,18 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { useState } from "react";
 import Input from "../UI/Input";
 import PrimaryButton from "../UI/PrimaryButton";
+import Subtitle from "../UI/Subtitle";
+import Spacer from "../UI/Spacer";
 
-function Form({ title, buttonTitle, repeatPassword, onSubmit }) {
+function Form({
+  title,
+  buttonTitle,
+  repeatPassword,
+  onSubmit,
+  subtitle,
+  subtitleButtonTitle,
+  onSubtitleButtonPress,
+}) {
   const [inputs, setInputs] = useState({
     email: {
       value: "",
@@ -47,13 +57,15 @@ function Form({ title, buttonTitle, repeatPassword, onSubmit }) {
 
   function submitHandler() {
     validateInputs();
-    if (
-      inputs.email.isValid &&
-      inputs.password.isValid
-      // TODO: Check repeat password validation
-    ) {
-      onSubmit();
+    if (!inputs.email.isValid || !inputs.password.isValid) {
+      return;
     }
+    if (repeatPassword && !repeatedPassword.isValid) {
+      return;
+    }
+    const email = inputs.email.value;
+    const password = inputs.password.value;
+    onSubmit({ email, password });
   }
 
   function validateInputs() {
@@ -158,6 +170,13 @@ function Form({ title, buttonTitle, repeatPassword, onSubmit }) {
         onPress={submitHandler}
         style={styles.buttonStyle}
       />
+      <Spacer />
+      <Subtitle
+        text={subtitle}
+        buttonTitle={subtitleButtonTitle}
+        onButtonPress={onSubtitleButtonPress}
+        style={styles.subtitle}
+      />
     </View>
   );
 }
@@ -190,5 +209,8 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginTop: 30,
+  },
+  subtitle: {
+    marginBottom: deviceHeight * 0.05,
   },
 });

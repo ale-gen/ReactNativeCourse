@@ -2,21 +2,25 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { Ionicons } from "@expo/vector-icons";
 
-function PrimaryButton({ title, iconName, onPress, style }) {
+function PrimaryButton({ title, iconName, mode, onPress, style }) {
   return (
     <View style={styles.rootContainer}>
       <Pressable
         style={({ pressed }) => [
-          styles.container,
-          styles.border,
-          styles.shadow,
+          styles.defaultContainer,
+          mode !== "naked" && styles.border,
+          mode !== "naked" && styles.shadow,
           pressed && styles.pressed,
+          mode === "naked" && styles.nakedContainer,
+          mode === "flat" && styles.flat,
           style,
         ]}
         onPress={onPress}
       >
         <View style={styles.rowContainer}>
-          <Text style={styles.text}>{title}</Text>
+          <Text style={[styles.text, mode === "naked" && styles.nakedText]}>
+            {title}
+          </Text>
           {iconName && <Ionicons name={iconName} size={20} color="white" />}
         </View>
       </Pressable>
@@ -30,7 +34,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     alignItems: "flex-end",
   },
-  container: {
+  defaultContainer: {
     justifyContent: "center",
     height: 60,
     width: "60%",
@@ -57,5 +61,15 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: "row",
     justifyContent: "center",
+  },
+  flat: {
+    backgroundColor: "transparent",
+  },
+  nakedContainer: {
+    backgroundColor: "transparent",
+    width: "100%",
+  },
+  nakedText: {
+    color: GlobalStyles.colors.darkPurple,
   },
 });

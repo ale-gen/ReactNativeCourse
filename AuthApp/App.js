@@ -18,6 +18,7 @@ function AuthStack() {
         },
         headerTitle: "",
         contentStyle: { backgroundColor: "transparent" },
+        animation: "fade",
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
