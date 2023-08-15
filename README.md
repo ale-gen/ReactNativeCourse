@@ -24,7 +24,7 @@ Goals:
 * Learn React's Context API & Redux
 ```
 
-- Expense Tracker App - app with dummy recipes
+- Expense Tracker App
 
 ```
 Goals:
