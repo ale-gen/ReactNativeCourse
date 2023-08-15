@@ -3,7 +3,6 @@ import { Text, Pressable, View, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getFormattedDate } from "../../util/date";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Spacer from "../ui/Spacer";
 
 function ExpenseItem({ id, name, amount, date }) {
@@ -14,7 +13,6 @@ function ExpenseItem({ id, name, amount, date }) {
       expenseId: id,
     });
   }
-  Icon;
 
   return (
     <View style={styles.rootContainer}>
