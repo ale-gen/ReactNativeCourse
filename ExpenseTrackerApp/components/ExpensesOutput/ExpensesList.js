@@ -1,5 +1,6 @@
 import { FlatList } from "react-native";
 import ExpenseItem from "./ExpenseItem";
+import Spacer from "../ui/Spacer";
 
 function ExpensesList({ expenses }) {
   console.log(expenses);
@@ -18,6 +19,7 @@ function ExpensesList({ expenses }) {
       data={expenses}
       renderItem={renderExpense}
       keyExtractor={(expense) => expense.id}
+      ListFooterComponent={<Spacer height={60} />}
     />
   );
 }
