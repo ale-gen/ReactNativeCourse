@@ -24,6 +24,20 @@ Goals:
 * Learn React's Context API & Redux
 ```
 
+- Expense Tracker App - app with dummy recipes
+
+```
+Goals:
+* Practice what I've learnt so far (Navigation, creating screens, Redux for updating local state)
+* Handling user inputs
+* Integration with Firebase Realtime Database (HTTP requests)
+```
+
+```
+To improve:
+* Get rid of warning regard to not valid icon names - preferred solution: check if name is valid before rendering, otherwise give default icon name
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
