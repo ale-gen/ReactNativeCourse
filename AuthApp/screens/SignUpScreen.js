@@ -1,10 +1,17 @@
-import { View, StyleSheet, Text } from "react-native";
+import Form from "../components/Auth/Form";
 
 function SignUpScreen() {
+  function signUp() {
+    console.log("Sign up...");
+  }
+
   return (
-    <View>
-      <Text>Create an account</Text>
-    </View>
+    <Form
+      title="Create an account"
+      buttonTitle="Sign up"
+      repeatPassword={true}
+      onSubmit={signUp}
+    />
   );
 }
 

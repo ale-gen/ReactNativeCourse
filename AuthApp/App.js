@@ -11,6 +11,7 @@ const Stack = createNativeStackNavigator();
 function AuthStack() {
   return (
     <Stack.Navigator
+      initialRouteName="SignUp"
       screenOptions={{
         headerBackground: () => {
           return <Header />;
@@ -44,7 +45,7 @@ export default function App() {
   return (
     <>
       <Navigation />
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </>
   );
 }
