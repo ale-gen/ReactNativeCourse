@@ -1,25 +1,29 @@
 import { ActivityIndicator, Alert } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../util/auth";
+import { authenticate } from "../store/authenticate";
 import Form from "../components/Auth/Form";
 import Card from "../components/UI/Card";
 
 function SignUpScreen({ navigation }) {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   async function signUp({ email, password }) {
     setIsLoading(true);
     try {
-      await createUser(email, password);
+      const token = await createUser(email, password);
+      dispatch(authenticate(token));
     } catch {
       Alert.alert(
         "Sign up failed",
         "Cannot create an account. Please try again later.",
         [{ text: "OK", style: "default" }]
       );
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   function navigateToLogin() {

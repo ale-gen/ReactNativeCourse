@@ -4,20 +4,24 @@ import { useState } from "react";
 import { login } from "../util/auth";
 import Form from "../components/Auth/Form";
 import Card from "../components/UI/Card";
+import { useDispatch } from "react-redux";
+import { authenticate } from "../store/authenticate";
 
 function LoginScreen({ navigation }) {
+  const dipatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+
   async function loginHandler({ email, password }) {
-    console.log("Login...");
     setIsLoading(true);
     try {
-      await login(email, password);
+      const token = await login(email, password);
+      dipatch(authenticate(token));
     } catch {
       Alert.alert("Login failed", "Check your credentials and try again.", [
         { text: "OK", style: "default" },
       ]);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   function navigateToSignUp() {
