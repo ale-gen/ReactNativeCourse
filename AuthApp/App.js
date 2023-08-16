@@ -3,14 +3,18 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { store } from "./store/store";
-import { logout } from "./store/authenticate";
+import { logout, authenticate } from "./store/authenticate";
+import { useEffect, useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import Header from "./components/UI/Header";
 import IconButton from "./components/UI/IconButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
+SplashScreen.preventAutoHideAsync();
 
 function AuthStack() {
   return (
@@ -63,6 +67,7 @@ function AuthenticatedStack() {
 
 function Navigation() {
   const auth = useSelector((state) => state.auth);
+
   return (
     <NavigationContainer>
       {auth.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
@@ -70,11 +75,34 @@ function Navigation() {
   );
 }
 
+function Root() {
+  const [isSessionRetrieving, setIsSessionRetrieving] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function retrieveSession() {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        dispatch(authenticate(token));
+      }
+      setIsSessionRetrieving(false);
+      await SplashScreen.hideAsync();
+    }
+    retrieveSession();
+  }, []);
+
+  if (isSessionRetrieving) {
+    return null;
+  }
+
+  return <Navigation />;
+}
+
 export default function App() {
   return (
     <>
       <Provider store={store}>
-        <Navigation />
+        <Root />
       </Provider>
       <StatusBar style="dark" />
     </>

@@ -1,7 +1,7 @@
 import { ActivityIndicator, Alert } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createUser } from "../util/auth";
 import { authenticate } from "../store/authenticate";
 import Form from "../components/Auth/Form";
