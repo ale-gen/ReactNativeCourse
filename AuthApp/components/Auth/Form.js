@@ -18,18 +18,18 @@ function Form({
     email: {
       value: "",
       isValid: true,
-      errorMessage: null,
+      errorMessage: "Invalid email.",
     },
     password: {
       value: "",
       isValid: true,
-      errorMessage: null,
+      errorMessage: "Password should contain at least 8 characters.",
     },
   });
   const [repeatedPassword, setRepeatedPassword] = useState({
     value: "",
     isValid: true,
-    errorMessage: null,
+    errorMessage: "Passwords don't match to each other.",
   });
 
   function inputChangeHandler(inputIdentifier, enteredText) {
@@ -38,8 +38,12 @@ function Form({
         ...currentInputValues,
         [inputIdentifier]: {
           value: enteredText,
-          isValid: true,
-          errorMessage: null,
+          isValid:
+            inputIdentifier === "email" ? validateEmail() : validatePassword(),
+          errorMessage:
+            inputIdentifier === "email"
+              ? "Invalid email."
+              : "Password should contain at least 8 characters.",
         },
       };
     });
@@ -49,18 +53,15 @@ function Form({
     setRepeatedPassword(() => {
       return {
         value: enteredText,
-        isValid: true,
-        errorMessage: null,
+        isValid: validateRepeatedPassword(),
+        errorMessage: repeatedPassword.errorMessage,
       };
     });
   }
 
   function submitHandler() {
-    validateInputs();
-    if (!inputs.email.isValid || !inputs.password.isValid) {
-      return;
-    }
-    if (repeatPassword && !repeatedPassword.isValid) {
+    const areInputsValid = validateInputs();
+    if (!areInputsValid) {
       return;
     }
     const email = inputs.email.value;
@@ -69,57 +70,39 @@ function Form({
   }
 
   function validateInputs() {
-    validateEmail();
-    validatePassword();
-    if (repeatPassword) {
-      validateRepeatedPassword();
+    const emailIsValid = !!validateEmail();
+    const passwordIsValid = validatePassword();
+    setInputs((currentInputValues) => {
+      currentInputValues.email.isValid = emailIsValid;
+      currentInputValues.password.isValid = passwordIsValid;
+      return { ...currentInputValues };
+    });
+    if (!repeatPassword) {
+      return emailIsValid && passwordIsValid;
     }
+    const repeatedPasswordIsValid = validateRepeatedPassword();
+    setRepeatedPassword((currentRepeatedPassword) => {
+      currentRepeatedPassword.isValid = repeatedPasswordIsValid;
+      return { ...currentRepeatedPassword };
+    });
+    return emailIsValid && passwordIsValid && repeatedPasswordIsValid;
   }
 
   function validateEmail() {
     var emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!inputs.email.value.match(emailRegex)) {
-      setInputs((currentInputs) => {
-        return {
-          ...currentInputs,
-          email: {
-            value: inputs.email.value,
-            isValid: false,
-            errorMessage: "Invalid email address.",
-          },
-        };
-      });
-    }
+    return inputs.email.value.match(emailRegex);
   }
 
   function validatePassword() {
-    const isValid = inputs.password.value.length >= 8;
-    setInputs((currentInputs) => {
-      return {
-        ...currentInputs,
-        password: {
-          value: inputs.password.value,
-          isValid: isValid,
-          errorMessage: isValid
-            ? null
-            : "Password should contains at least 8 characters.",
-        },
-      };
-    });
+    return inputs.password.value.length >= 8;
   }
 
   function validateRepeatedPassword() {
-    const isValid =
+    return (
       repeatedPassword.value.length >= 8 &&
-      inputs.password.value === repeatedPassword.value;
-    setRepeatedPassword(() => {
-      return {
-        value: repeatedPassword.value,
-        isValid: isValid,
-        errorMessage: isValid ? null : "Passwords don't match to each other.",
-      };
-    });
+      inputs.password.value === repeatedPassword.value
+    );
   }
 
   return (
