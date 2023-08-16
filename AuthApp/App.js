@@ -1,12 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { store } from "./store/store";
+import { logout } from "./store/authenticate";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import Header from "./components/UI/Header";
+import IconButton from "./components/UI/IconButton";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,8 +32,30 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
+  const dispatch = useDispatch();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+        headerLargeTitle: true,
+        headerBackground: () => {
+          return <Header />;
+        },
+        headerLargeTitleShadowVisible: true,
+        headerRight: ({ tintColor }) => {
+          return (
+            <IconButton
+              name="md-exit-outline"
+              color={tintColor}
+              size={26}
+              onPress={() => {
+                dispatch(logout());
+              }}
+            />
+          );
+        },
+      }}
+    >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
     </Stack.Navigator>
   );

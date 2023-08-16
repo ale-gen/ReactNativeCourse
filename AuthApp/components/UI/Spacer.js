@@ -1,7 +1,7 @@
 import { View } from "react-native";
 
-function Spacer({ height }) {
-  return <View style={{ flex: 1, height: height }} />;
+function Spacer({ style }) {
+  return <View style={[!style && { flex: 1 }, style]} />;
 }
 
 export default Spacer;
