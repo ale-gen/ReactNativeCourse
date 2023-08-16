@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AuthApp",
-    "slug": "AuthApp",
+    "name": "SpotMeApp",
+    "slug": "SpotMeApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "backgroundColor": "#5C4B99",
