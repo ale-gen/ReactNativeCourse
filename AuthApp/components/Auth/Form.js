@@ -123,7 +123,7 @@ function Form({
   }
 
   return (
-    <View style={styles.rootContainer}>
+    <>
       <Text style={styles.title}>{title}</Text>
       <View style={[styles.inputsContainer, repeatPassword && { height: 300 }]}>
         <Input
@@ -177,7 +177,7 @@ function Form({
         onButtonPress={onSubtitleButtonPress}
         style={styles.subtitle}
       />
-    </View>
+    </>
   );
 }
 
@@ -188,13 +188,13 @@ const deviceHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    marginTop: 10,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    paddingTop: 20,
-    paddingHorizontal: 20,
+    // marginTop: 10,
+    // backgroundColor: "white",
+    // borderWidth: 1,
+    // borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // paddingTop: 20,
+    // paddingHorizontal: 20,
   },
   title: {
     fontWeight: "bold",
