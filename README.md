@@ -38,7 +38,7 @@ To improve:
 * Get rid of warning regard to not valid icon names - preferred solution: check if name is valid before rendering, otherwise give default icon name
 ```
 
-- Auth App
+- SpotMe App
 
 ```
 Goals:
