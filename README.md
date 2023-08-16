@@ -38,6 +38,16 @@ To improve:
 * Get rid of warning regard to not valid icon names - preferred solution: check if name is valid before rendering, otherwise give default icon name
 ```
 
+- Auth App
+
+```
+Goals:
+* Switching navigator stacks depends on user authentication
+* Integrate authentication with Firebase Auth
+* Manage idToken to protect damanding data (stored in persistent local storage and in Redux store)
+* Focusing on UIs good for eyes
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
