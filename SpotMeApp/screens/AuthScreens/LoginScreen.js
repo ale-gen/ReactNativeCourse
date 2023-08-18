@@ -1,11 +1,11 @@
 import { ActivityIndicator, Alert } from "react-native";
-import { GlobalStyles } from "../constants/styles";
+import { GlobalStyles } from "../../constants/styles";
 import { useState } from "react";
-import { login } from "../util/auth";
-import Form from "../components/Auth/Form";
-import Card from "../components/UI/Card";
+import { login } from "../../util/auth";
 import { useDispatch } from "react-redux";
-import { authenticate } from "../store/authenticate";
+import { authenticate } from "../../store/authenticate";
+import Form from "../../components/Auth/Form";
+import Card from "../../components/UI/Card";
 
 function LoginScreen({ navigation }) {
   const dipatch = useDispatch();

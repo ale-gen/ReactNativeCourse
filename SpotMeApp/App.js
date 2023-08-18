@@ -1,19 +1,25 @@
 import { StatusBar } from "expo-status-bar";
+import { Dimensions } from "react-native";
+import { GlobalStyles } from "./constants/styles";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { store } from "./store/store";
 import { logout, authenticate } from "./store/authenticate";
 import { useEffect, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
-import LoginScreen from "./screens/LoginScreen";
-import SignUpScreen from "./screens/SignUpScreen";
-import WelcomeScreen from "./screens/WelcomeScreen";
+import LoginScreen from "./screens/AuthScreens/LoginScreen";
+import SignUpScreen from "./screens/AuthScreens/SignUpScreen";
+import UserPlacesScreen from "./screens/UserPlacesScreen";
+import DiscoveryScreen from "./screens/DiscoveryScreen";
 import Header from "./components/UI/Header";
 import IconButton from "./components/UI/IconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 SplashScreen.preventAutoHideAsync();
 
 function AuthStack() {
@@ -41,7 +47,7 @@ function AuthenticatedStack() {
     <Stack.Navigator
       screenOptions={{
         headerTintColor: "white",
-        headerLargeTitle: true,
+        headerLargeTitle: false,
         headerBackground: () => {
           return <Header />;
         },
@@ -58,10 +64,41 @@ function AuthenticatedStack() {
             />
           );
         },
+        title: "",
       }}
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="TopTab" component={TopTab} />
     </Stack.Navigator>
+  );
+}
+
+function TopTab() {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <Tab.Navigator
+      initialRouteName="Discovery"
+      sceneContainerStyle={{ backgroundColor: "transparent" }}
+      tabBarPosition="top"
+      screenOptions={{
+        tabBarActiveTintColor: "white",
+        tabBarIndicatorStyle: {
+          backgroundColor: "white",
+          width: Dimensions.get("window").width * 0.25,
+          marginLeft: Dimensions.get("window").width * 0.125,
+        },
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.darkPurple,
+          shadowColor: GlobalStyles.colors.darkPurple,
+          shadowOpacity: 1,
+          shadowRadius: 20,
+          elevation: 1,
+        },
+      }}
+    >
+      <Tab.Screen name="Discovery" component={DiscoveryScreen} />
+      <Tab.Screen name="Your places" component={UserPlacesScreen} />
+    </Tab.Navigator>
   );
 }
 
