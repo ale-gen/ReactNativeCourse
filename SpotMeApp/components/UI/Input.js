@@ -1,4 +1,11 @@
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
@@ -42,14 +49,16 @@ function Input({ title, inputConfig, isValid, errorMessage }) {
 
 export default Input;
 
+const deviceHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   title: {
     color: "gray",
-    fontSize: 16,
+    fontSize: deviceHeight > 800 ? 16 : 12,
     fontWeight: "700",
   },
   textInput: {
-    height: 50,
+    height: deviceHeight > 800 ? 50 : 30,
     padding: 8,
   },
   underline: {
@@ -61,14 +70,14 @@ const styles = StyleSheet.create({
   },
   invalidText: {
     color: "red",
-    fontSize: 13,
+    fontSize: deviceHeight > 800 ? 13 : 9,
     fontWeight: "400",
     marginTop: 3,
   },
   secureTextIconContainer: {
     position: "absolute",
     right: 20,
-    top: 30,
+    top: deviceHeight > 800 ? 30 : 10,
     justifyContent: "center",
   },
 });

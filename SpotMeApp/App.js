@@ -14,6 +14,8 @@ import LoginScreen from "./screens/AuthScreens/LoginScreen";
 import SignUpScreen from "./screens/AuthScreens/SignUpScreen";
 import UserPlacesScreen from "./screens/UserPlacesScreen";
 import DiscoveryScreen from "./screens/DiscoveryScreen";
+import AddPlace from "./components/Places/AddPlace";
+import LocalizationPicker from "./components/Places/LocalizationPicker";
 import Header from "./components/UI/Header";
 import IconButton from "./components/UI/IconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,22 +54,36 @@ function AuthenticatedStack() {
           return <Header />;
         },
         headerLargeTitleShadowVisible: true,
-        headerRight: ({ tintColor }) => {
-          return (
-            <IconButton
-              name="md-exit-outline"
-              color={tintColor}
-              size={26}
-              onPress={() => {
-                dispatch(logout());
-              }}
-            />
-          );
-        },
         title: "",
       }}
     >
-      <Stack.Screen name="TopTab" component={TopTab} />
+      <Stack.Screen
+        name="TopTab"
+        component={TopTab}
+        options={{
+          headerRight: ({ tintColor }) => {
+            return (
+              <IconButton
+                name="md-exit-outline"
+                color={tintColor}
+                size={26}
+                onPress={() => {
+                  dispatch(logout());
+                }}
+              />
+            );
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AddPlace"
+        component={AddPlace}
+        options={{
+          presentation: "modal",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen name="ChooseLocalization" component={LocalizationPicker} />
     </Stack.Navigator>
   );
 }

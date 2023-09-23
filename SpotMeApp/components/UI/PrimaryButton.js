@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { Ionicons } from "@expo/vector-icons";
 
-function PrimaryButton({ title, iconName, mode, onPress, style }) {
+function PrimaryButton({ title, iconName, mode, onPress, disabled, style }) {
   return (
     <View style={styles.rootContainer}>
       <Pressable
@@ -14,8 +14,10 @@ function PrimaryButton({ title, iconName, mode, onPress, style }) {
           mode === "naked" && styles.nakedContainer,
           mode === "flat" && styles.flat,
           style,
+          disabled && styles.disabled,
         ]}
         onPress={onPress}
+        disabled={disabled}
       >
         <View style={styles.rowContainer}>
           <Text style={[styles.text, mode === "naked" && styles.nakedText]}>
@@ -49,6 +51,7 @@ const styles = StyleSheet.create({
     shadowColor: GlobalStyles.colors.lightPurple,
     shadowOpacity: 1,
     shadowOffset: { width: 2, height: 4 },
+    elevation: 20,
   },
   text: {
     textAlign: "center",
@@ -71,5 +74,9 @@ const styles = StyleSheet.create({
   },
   nakedText: {
     color: GlobalStyles.colors.darkPurple,
+  },
+  disabled: {
+    backgroundColor: GlobalStyles.colors.darkPurple,
+    opacity: 0.5,
   },
 });

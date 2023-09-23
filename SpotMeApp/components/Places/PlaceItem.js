@@ -4,6 +4,7 @@ import {
   ImageBackground,
   Dimensions,
 } from "react-native";
+import { GlobalStyles } from "../../constants/styles";
 
 function PlaceItem({ place, onSelect }) {
   const image = { uri: place.imageUri };
@@ -30,18 +31,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     margin: 10,
+    height: deviceHeight > 800 ? 300 : 200,
   },
   image: {
     flex: 1,
     justifyContent: "center",
     overflow: "hidden",
-    height: deviceHeight > 800 ? 300 : 200,
   },
   border: {
     borderRadius: 20,
   },
   shadow: {
-    shadowColor: "black",
+    shadowColor: "gray",
     shadowOpacity: 1,
     shadowRadius: 10,
     shadowOffset: { width: 2, height: 4 },

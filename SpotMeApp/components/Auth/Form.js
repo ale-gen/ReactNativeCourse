@@ -108,7 +108,12 @@ function Form({
   return (
     <>
       <Text style={styles.title}>{title}</Text>
-      <View style={[styles.inputsContainer, repeatPassword && { height: 300 }]}>
+      <View
+        style={[
+          styles.inputsContainer,
+          repeatPassword && { height: deviceHeight > 800 ? 300 : 200 },
+        ]}
+      >
         <Input
           title={"Email address"}
           inputConfig={{
