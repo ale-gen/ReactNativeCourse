@@ -5,9 +5,9 @@ import {
   PermissionStatus,
 } from "expo-image-picker";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import PrimaryButton from "../UI/PrimaryButton";
-import { useNavigation } from "@react-navigation/native";
 
 function ImagePicker() {
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ function ImagePicker() {
     } else if (cameraPermissions.status === PermissionStatus.DENIED) {
       Alert.alert(
         "Cannot use camera",
-        "You didn'r granted permissions to your camera. Change them if you want to take a photo.",
+        "You didn't granted permissions to your camera. Change them if you want to take a photo.",
         [
           { text: "Cancel", style: "destructive" },
           { text: "Change", style: "default" },
