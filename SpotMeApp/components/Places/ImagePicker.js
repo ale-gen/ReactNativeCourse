@@ -46,7 +46,7 @@ function ImagePicker() {
   }
 
   function navigateToNextStep() {
-    navigation.navigate("ChooseLocalization");
+    navigation.navigate("ChooseLocation");
   }
 
   return (
