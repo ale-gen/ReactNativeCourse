@@ -16,6 +16,7 @@ import UserPlacesScreen from "./screens/UserPlacesScreen";
 import DiscoveryScreen from "./screens/DiscoveryScreen";
 import AddPlace from "./components/Places/AddPlace";
 import LocationPicker from "./components/Places/LocationPicker";
+import Map from "./components/Places/Map";
 import Header from "./components/UI/Header";
 import IconButton from "./components/UI/IconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -84,6 +85,7 @@ function AuthenticatedStack() {
         }}
       />
       <Stack.Screen name="ChooseLocation" component={LocationPicker} />
+      <Stack.Screen name="Map" component={Map} />
     </Stack.Navigator>
   );
 }

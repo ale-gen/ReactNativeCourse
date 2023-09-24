@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet, Alert, Text } from "react-native";
+import { View, Pressable, StyleSheet, Alert, Text, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   getCurrentPositionAsync,
@@ -6,10 +6,13 @@ import {
   PermissionStatus,
 } from "expo-location";
 import { useRef, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { getMapPreview } from "../../util/location";
 import PrimaryButton from "../UI/PrimaryButton";
 import ActionSheet from "react-native-actionsheet";
 
 function LocationPicker() {
+  const navigation = useNavigation();
   const actionSheet = useRef();
   const [locationPermissions, setLocationPermissions] =
     useForegroundPermissions();
@@ -54,10 +57,15 @@ function LocationPicker() {
       return;
     }
     const location = await getCurrentPositionAsync();
-    console.log(location);
+    setLocation({
+      lat: location.coords.latitude,
+      lng: location.coords.longitude,
+    });
   }
 
-  function pickOnMapHandler() {}
+  function pickOnMapHandler() {
+    navigation.navigate("Map");
+  }
 
   function showLocationChoiceAlert() {
     actionSheet.current.show();
@@ -69,7 +77,10 @@ function LocationPicker() {
     <View style={styles.container}>
       <Pressable onPress={showLocationChoiceAlert} style={styles.mapPreview}>
         {location ? (
-          <Text>{location}</Text>
+          <Image
+            source={{ uri: "../../assets/images/mapPreview.png" }}
+            style={styles.image}
+          />
         ) : (
           <>
             <MaterialIcons name="add-location-alt" size={50} color="black" />
@@ -112,5 +123,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     padding: 5,
   },
-  action: {},
+  image: {
+    width: "100%",
+    height: "100%",
+  },
 });
