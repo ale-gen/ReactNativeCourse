@@ -11,7 +11,7 @@ function UserPlacesScreen({ navigation }) {
           iconName={"add"}
           style={styles.floatingButton}
           onPress={() => {
-            navigation.navigate("AddPlace");
+            navigation.navigate("PickImage");
           }}
         />
       </View>

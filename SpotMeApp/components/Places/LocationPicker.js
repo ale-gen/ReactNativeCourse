@@ -28,9 +28,10 @@ function LocationPicker() {
     "Cancel",
   ];
   const [location, setLocation] = useState();
+  const pickedImage = route.params.image;
 
   useEffect(() => {
-    if (isFocused && route.params) {
+    if (isFocused && route.params.location) {
       const mapPickedLocation = route.params.location;
       setLocation(mapPickedLocation);
     }
@@ -38,7 +39,6 @@ function LocationPicker() {
 
   async function verifyLocationPermissions() {
     if (locationPermissions.status === PermissionStatus.UNDETERMINED) {
-      console.log("Permissions undetermined");
       const permissionsResponse = await setLocationPermissions();
       return permissionsResponse.granted;
     } else if (locationPermissions.status === PermissionStatus.DENIED) {
@@ -51,12 +51,10 @@ function LocationPicker() {
         ]
       );
     }
-    console.log("Permissions already granted");
     return true;
   }
 
   async function locationChoiceHandler(index) {
-    console.log("Choice with index: " + index);
     if (index === 0) {
       await getCurrentLocationHandler();
     } else {
@@ -84,7 +82,12 @@ function LocationPicker() {
     actionSheet.current.show();
   }
 
-  function navigateToNextStep() {}
+  function navigateToNextStep() {
+    navigation.navigate("PlaceTip", {
+      image: pickedImage,
+      location: location,
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -104,10 +107,10 @@ function LocationPicker() {
         )}
       </Pressable>
       <PrimaryButton
-        title="Add"
+        title="Next"
         onPress={navigateToNextStep}
         disabled={!location}
-        style={{ width: "90%", marginHorizontal: 20 }}
+        style={styles.button}
       />
       <ActionSheet
         ref={actionSheet}
@@ -141,5 +144,9 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },
+  button: {
+    width: "90%",
+    marginHorizontal: 20,
   },
 });

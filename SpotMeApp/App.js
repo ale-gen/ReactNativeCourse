@@ -14,7 +14,8 @@ import LoginScreen from "./screens/AuthScreens/LoginScreen";
 import SignUpScreen from "./screens/AuthScreens/SignUpScreen";
 import UserPlacesScreen from "./screens/UserPlacesScreen";
 import DiscoveryScreen from "./screens/DiscoveryScreen";
-import AddPlace from "./components/Places/AddPlace";
+import PlaceTip from "./components/Places/PlaceTip";
+import ImagePicker from "./components/Places/ImagePicker";
 import LocationPicker from "./components/Places/LocationPicker";
 import Map from "./components/Places/Map";
 import Header from "./components/UI/Header";
@@ -76,16 +77,10 @@ function AuthenticatedStack() {
           },
         }}
       />
-      <Stack.Screen
-        name="AddPlace"
-        component={AddPlace}
-        options={{
-          presentation: "modal",
-          headerShown: true,
-        }}
-      />
+      <Stack.Screen name="PickImage" component={ImagePicker} />
       <Stack.Screen name="ChooseLocation" component={LocationPicker} />
       <Stack.Screen name="Map" component={Map} />
+      <Stack.Screen name="PlaceTip" component={PlaceTip} />
     </Stack.Navigator>
   );
 }
