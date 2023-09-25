@@ -1,16 +1,18 @@
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import { useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import PrimaryButton from "../UI/PrimaryButton";
+import Place from "../../models/Place";
 
 function PlaceTip() {
+  const navigation = useNavigation();
   const route = useRoute();
   const [tip, setTip] = useState();
 
   function publishHandler() {
-    console.log(route.params.image);
-    console.log(route.params.location);
-    console.log(tip);
+    const newPlace = new Place(route.params.image, route.params.location, tip);
+    console.log(newPlace);
+    navigation.navigate("TopTab", { place: newPlace });
   }
 
   return (

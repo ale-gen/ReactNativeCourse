@@ -11,7 +11,7 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { getMapPreview } from "../../util/location";
+import { getAddress, getMapPreview } from "../../util/location";
 import PrimaryButton from "../UI/PrimaryButton";
 import ActionSheet from "react-native-actionsheet";
 
@@ -36,6 +36,16 @@ function LocationPicker() {
       setLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    async function handleAddress() {
+      if (location) {
+        const address = await getAddress(location.lat, location.lng);
+        setLocation({ ...location, address: address });
+      }
+    }
+    handleAddress();
+  }, [location, setLocation]);
 
   async function verifyLocationPermissions() {
     if (locationPermissions.status === PermissionStatus.UNDETERMINED) {
