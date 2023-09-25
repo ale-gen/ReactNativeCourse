@@ -5,14 +5,20 @@ import {
   useForegroundPermissions,
   PermissionStatus,
 } from "expo-location";
-import { useRef, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useEffect, useRef, useState } from "react";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { getMapPreview } from "../../util/location";
 import PrimaryButton from "../UI/PrimaryButton";
 import ActionSheet from "react-native-actionsheet";
 
 function LocationPicker() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const isFocused = useIsFocused();
   const actionSheet = useRef();
   const [locationPermissions, setLocationPermissions] =
     useForegroundPermissions();
@@ -22,6 +28,13 @@ function LocationPicker() {
     "Cancel",
   ];
   const [location, setLocation] = useState();
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const mapPickedLocation = route.params.location;
+      setLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
 
   async function verifyLocationPermissions() {
     if (locationPermissions.status === PermissionStatus.UNDETERMINED) {
@@ -78,7 +91,9 @@ function LocationPicker() {
       <Pressable onPress={showLocationChoiceAlert} style={styles.mapPreview}>
         {location ? (
           <Image
-            source={{ uri: "../../assets/images/mapPreview.png" }}
+            //NOTE: If you have Google API Key for Static Map API - uncomment line 95, and delete line 96
+            //source={{ uri: getMapPreview(location.lat, location.lng) }}
+            source={require("../../assets/images/mapPreview.png")}
             style={styles.image}
           />
         ) : (
