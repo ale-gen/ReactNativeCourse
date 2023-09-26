@@ -7,7 +7,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { store } from "./store/store";
 import { logout, authenticate } from "./store/authenticate";
-import { useEffect, useState } from "react";
+import { init } from "./util/database";
+import { useCallback, useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
 import LoginScreen from "./screens/AuthScreens/LoginScreen";
@@ -47,6 +48,29 @@ function AuthStack() {
 
 function AuthenticatedStack() {
   const dispatch = useDispatch();
+
+  const [dbInitialized, setDbInitialized] = useState();
+
+  useEffect(() => {
+    init()
+      .then(() => {
+        setDbInitialized(true);
+      })
+      .catch((error) => {
+        console.log("Error during database initialization: " + error);
+      });
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (dbInitialized) {
+      await SplashScreen.hideAsync();
+    }
+  }, [dbInitialized]);
+
+  if (!dbInitialized) {
+    return null;
+  }
+
   return (
     <Stack.Navigator
       screenOptions={{

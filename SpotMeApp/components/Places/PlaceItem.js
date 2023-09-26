@@ -13,6 +13,7 @@ function PlaceItem({ place, onSelect }) {
       style={({ pressed }) => [
         styles.container,
         styles.shadow,
+        styles.border,
         pressed && styles.pressed,
       ]}
       onPress={onSelect}
@@ -42,13 +43,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   shadow: {
-    shadowColor: "gray",
+    shadowColor: "black",
     shadowOpacity: 1,
     shadowRadius: 10,
     shadowOffset: { width: 2, height: 4 },
-    elevation: 1,
+    elevation: 20,
   },
   pressed: {
     opacity: 0.5,
+    shadowOpacity: 0,
   },
 });
