@@ -4,7 +4,6 @@ import {
   ImageBackground,
   Dimensions,
 } from "react-native";
-import { GlobalStyles } from "../../constants/styles";
 
 function PlaceItem({ place, onSelect }) {
   const image = { uri: place.imageUri };
@@ -16,7 +15,7 @@ function PlaceItem({ place, onSelect }) {
         styles.border,
         pressed && styles.pressed,
       ]}
-      onPress={onSelect}
+      onPress={onSelect.bind(this, place)}
     >
       <ImageBackground style={[styles.border, styles.image]} source={image} />
     </Pressable>

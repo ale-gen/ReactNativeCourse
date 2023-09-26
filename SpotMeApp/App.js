@@ -22,6 +22,7 @@ import Map from "./components/Places/Map";
 import Header from "./components/UI/Header";
 import IconButton from "./components/UI/IconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import PlaceDetails from "./components/Places/PlaceDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -83,6 +84,7 @@ function AuthenticatedStack() {
       <Stack.Screen name="ChooseLocation" component={LocationPicker} />
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="PlaceTip" component={PlaceTip} />
+      <Stack.Screen name="PlaceDetails" component={PlaceDetails} />
     </Stack.Navigator>
   );
 }
