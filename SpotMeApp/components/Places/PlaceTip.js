@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { insertPlace } from "../../util/database";
 import PrimaryButton from "../UI/PrimaryButton";
 import Place from "../../models/Place";
 
@@ -9,9 +10,11 @@ function PlaceTip() {
   const route = useRoute();
   const [tip, setTip] = useState();
 
-  function publishHandler() {
+  async function publishHandler() {
     const newPlace = new Place(route.params.image, route.params.location, tip);
     console.log(newPlace);
+    newPlace.address = "Example address";
+    await insertPlace(newPlace);
     navigation.navigate("TopTab", { place: newPlace });
   }
 

@@ -49,28 +49,6 @@ function AuthStack() {
 function AuthenticatedStack() {
   const dispatch = useDispatch();
 
-  const [dbInitialized, setDbInitialized] = useState();
-
-  useEffect(() => {
-    init()
-      .then(() => {
-        setDbInitialized(true);
-      })
-      .catch((error) => {
-        console.log("Error during database initialization: " + error);
-      });
-  }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (dbInitialized) {
-      await SplashScreen.hideAsync();
-    }
-  }, [dbInitialized]);
-
-  if (!dbInitialized) {
-    return null;
-  }
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -173,6 +151,28 @@ function Root() {
 }
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState();
+
+  useEffect(() => {
+    init()
+      .then(() => {
+        setDbInitialized(true);
+        console.log("✅ Database initialized successfully");
+      })
+      .catch((error) => {
+        console.log("❌ Error during database initialization: " + error);
+      });
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (dbInitialized) {
+      await SplashScreen.hideAsync();
+    }
+  }, [dbInitialized]);
+
+  if (!dbInitialized) {
+    return null;
+  }
   return (
     <>
       <Provider store={store}>

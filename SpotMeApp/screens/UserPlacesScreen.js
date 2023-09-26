@@ -3,8 +3,24 @@ import { mockPlaces } from "../models/mocks/MockPlaces";
 import PlacesList from "../components/Places/PlacesList";
 import PrimaryButton from "../components/UI/PrimaryButton";
 import { GlobalStyles } from "../constants/styles";
+import { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import { fetchPlaces } from "../util/database";
 
 function UserPlacesScreen({ navigation }) {
+  const [loadedPlaces, setLoadedPlaces] = useState([]);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    async function loadPlaces() {
+      const places = await fetchPlaces();
+      setLoadedPlaces(places);
+    }
+    if (isFocused) {
+      loadPlaces();
+    }
+  }, [isFocused]);
+
   function floatingButton() {
     return (
       <View style={styles.floatingButtonContainer}>
@@ -21,7 +37,7 @@ function UserPlacesScreen({ navigation }) {
 
   return (
     <>
-      <PlacesList places={mockPlaces} />
+      <PlacesList places={loadedPlaces} />
       {floatingButton()}
     </>
   );
